@@ -43,6 +43,8 @@ module Vpim
             f = field_create(name, Vpim.encode_date(value), default, 'DATE')
           when Time
             f = field_create(name, Vpim.encode_date_time(value), default, 'DATE-TIME')
+          when String
+            f = field_create(name, Vpim.encode_text(value), default, 'DATE')
           else
             raise Vpim::Unencodeable, "Invalid #{name} value #{value.inspect}"
           end
