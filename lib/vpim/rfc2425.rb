@@ -300,9 +300,9 @@ module Vpim
 
   def Vpim.encode_paramvalue(value)
     case value
-    when %r{\A#{Bnf::SAFECHAR}*\z}
+    when /\A#{Bnf::SAFECHAR}*\z/n
       value
-    when %r{\A#{Bnf::QSAFECHAR}*\z}
+    when /\A#{Bnf::QSAFECHAR}*\z/n
       '"' + value + '"'
     else
       raise Vpim::Unencodable, "param-value #{value.inspect}"
