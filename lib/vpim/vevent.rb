@@ -63,6 +63,7 @@ module Vpim
       #   Vevent.create(Date.today, 'SUMMARY' => "today's event")
       #
       def Vevent.create(start = Time.now, fields=[])
+        p fields
         # TODO
         # - maybe events are usually created in a particular way? With a
         # start/duration or a start/end? Maybe I can make it easier. Ideally, I
@@ -130,6 +131,10 @@ module Vpim
       # DURATION.
       def dtend
         propend 'DTEND'
+      end
+
+      def uid
+        propend 'UID'
       end
 
       # Make a new Vevent, or make changes to an existing Vevent.

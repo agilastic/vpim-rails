@@ -31,6 +31,7 @@ module Vpim
       private_class_method :new
 
       def Field.create_array(fields)
+        p fields
         case fields
           when Hash
             fields.map do |name,value|
