@@ -85,30 +85,6 @@ module Vpim
           organizer.freeze
         end
 
-=begin
-recurid
-seq
-=end
-
-        # Status values are not rejected during decoding. However, if the
-        # status is requested, and it's value is not one of the defined
-        # allowable values, an exception is raised.
-        def status
-          case self
-          when Vpim::Icalendar::Vevent
-            proptoken 'STATUS', ['TENTATIVE', 'CONFIRMED', 'CANCELLED']
-
-          when Vpim::Icalendar::Vtodo
-            proptoken 'STATUS', ['NEEDS-ACTION', 'COMPLETED', 'IN-PROCESS', 'CANCELLED']
-
-          when Vpim::Icalendar::Vevent
-            proptoken 'STATUS', ['DRAFT', 'FINAL', 'CANCELLED']
-          end
-        end
-
-        # TODO - def status? ...
-
-        # TODO - def status= ...
 
         # Summary description of the calendar component, or nil if there is no
         # SUMMARY property.
@@ -171,6 +147,16 @@ seq
           @properties.enum_by_name('ATTACH').map do |f|
             attachment = Attachment.decode(f, 'uri', 'FMTTYPE')
           end
+        end
+
+        # Property for location of the calendar component
+        def location
+          proptext 'LOCATION'
+        end
+
+        # Property for status of the calendar component
+        def status
+          proptext 'STATUS'
         end
       end
 
@@ -239,19 +225,21 @@ seq
         end
 
 =begin
+        # OLD IMPLEMENTATION
         # Status values are not rejected during decoding. However, if the
         # status is requested, and it's value is not one of the defined
         # allowable values, an exception is raised.
         def status
-          case self
-          when Vpim::Icalendar::Vevent
-            proptoken 'STATUS', ['TENTATIVE', 'CONFIRMED', 'CANCELLED']
+          begin
+            case self
+              when Vpim::Icalendar::Vevent
+                proptoken 'STATUS', ['TENTATIVE', 'CONFIRMED', 'CANCELLED', 'UNCONFIRMED', 'DRAFT', 'FINAL']
 
-          when Vpim::Icalendar::Vtodo
-            proptoken 'STATUS', ['NEEDS-ACTION', 'COMPLETED', 'IN-PROCESS', 'CANCELLED']
-
-          when Vpim::Icalendar::Vevent
-            proptoken 'STATUS', ['DRAFT', 'FINAL', 'CANCELLED']
+              when Vpim::Icalendar::Vtodo
+                proptoken 'STATUS', ['NEEDS-ACTION', 'COMPLETED', 'IN-PROCESS', 'CANCELLED']
+            end
+          rescue
+            proptoken 'STATUS'
           end
         end
 =end
@@ -306,6 +294,15 @@ seq
           end
         end
 =end
+        # Set a location of the calendar component, see Icalendar::Property::Common#location.
+        def location(value)
+          set_text 'LOCATION', value
+        end
+
+        # Set a status of the calendar component, see Icalendar::Property::Common#status.
+        def status(value)
+          set_text 'STATUS', value
+        end
 
       end
 

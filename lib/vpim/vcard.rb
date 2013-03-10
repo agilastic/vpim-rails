@@ -884,6 +884,10 @@ module Vpim
         value('CATEGORIES')
       end
 
+      def status
+        value('STATUS')
+      end
+
       # The first EMAIL value of type +type+, a Email. Any of the location
       # attributes of Email can be used as +type+. A wrapper around
       # #value('EMAIL', +type+).
