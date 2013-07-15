@@ -299,7 +299,7 @@ module Vpim
   end
 
   def Vpim.encode_paramvalue(value)
-    value = value.force_encoding 'iso-8859-15'
+    value = value.force_encoding 'US-ASCII'
     case value
     when /\A#{Bnf::SAFECHAR}*\z/n
       value
