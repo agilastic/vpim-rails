@@ -299,6 +299,7 @@ module Vpim
   end
 
   def Vpim.encode_paramvalue(value)
+    value = value.force_encoding 'utf-8'
     case value
     when /\A#{Bnf::SAFECHAR}*\z/n
       value
