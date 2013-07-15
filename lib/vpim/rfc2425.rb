@@ -1,4 +1,4 @@
-# encoding: UTF-8
+# encoding: US-ASCII
 =begin
   Copyright (C) 2008 Sam Roberts
 
@@ -290,6 +290,7 @@ module Vpim
   # paramtext  = *SAFE-CHAR
   # quoted-string      = DQUOTE *QSAFE-CHAR DQUOTE
   def Vpim.encode_paramtext(value)
+    value = value.force_encoding 'US-ASCII'
     case value
     when /\A#{Bnf::SAFECHAR}*\z/n
       value
@@ -299,8 +300,7 @@ module Vpim
   end
 
   def Vpim.encode_paramvalue(value)
-    #value = value.force_encoding 'US-ASCII'
-    value = value.force_encoding 'utf-8'
+    value = value.force_encoding 'US-ASCII'
     case value
     when /\A#{Bnf::SAFECHAR}*\z/n
       value
